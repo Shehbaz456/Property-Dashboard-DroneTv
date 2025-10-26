@@ -9,15 +9,12 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + uniqueSuffix);
   },
 });
-
-export const upload = multer({ storage });
-
-// import multer from "multer";
-// import path from "path";
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => cb(null, "public/uploads"),
-//   filename: (req, file, cb) => cb(null, Date.now() + path.extname(file.originalname)),
-// });
-
-// export const upload = multer({ storage });
+// File filter to accept only images
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true); // accept file
+  } else {
+    cb(new Error("Only image files are allowed!"), false); // reject file
+  }
+};
+export const upload = multer({ storage, fileFilter });

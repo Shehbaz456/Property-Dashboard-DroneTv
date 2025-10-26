@@ -12,8 +12,8 @@ const router = express.Router();
 
 router.get("/", getAllProperties);
 router.get("/:id", getPropertyById);
-router.post("/", upload.single("imageurl"), createProperty);
-router.put("/:id", upload.single("imageurl"), updateProperty);
+router.post("/", upload.single("image"), createProperty);
+router.put("/:id", upload.single("image"), updateProperty);
 router.delete("/:id", deleteProperty);
 
 export default router;

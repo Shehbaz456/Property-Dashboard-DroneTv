@@ -1,4 +1,3 @@
-// models/Property.js
 import mongoose from "mongoose";
 
 const propertySchema = new mongoose.Schema({
@@ -25,8 +24,7 @@ const propertySchema = new mongoose.Schema({
     required: true
   },
   imageUrl: {
-    type: String, // cloudinary
-    default:"https://images.unsplash.com/photo-1760796492369-e8e55e122a26?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1175"
+    type: String, // cloudinary URL
   },
   coordinates: {
     lat: { type: Number },
