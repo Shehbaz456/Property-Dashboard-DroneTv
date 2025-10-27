@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import { FaTimes, FaMapMarkerAlt, FaDollarSign, FaSearch } from "react-icons/fa";
 import { useGetPropertiesQuery } from "../store/api/propertyApiSlice";
 import Cards from "../components/Cards";
 import PropertyDetails from "../components/PropertyDetails";
