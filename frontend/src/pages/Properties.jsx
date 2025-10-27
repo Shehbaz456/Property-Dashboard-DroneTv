@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { FaTimes, FaMapMarkerAlt, FaDollarSign, FaSearch } from "react-icons/fa";
 import { useGetPropertiesQuery } from "../store/api/propertyApiSlice";
 import Cards from "../components/Cards";
 import PropertyDetails from "../components/PropertyDetails";
 
+
 export default function Properties() {
   const { data: properties = [], isLoading, error } = useGetPropertiesQuery();
   const [filteredProperties, setFilteredProperties] = useState([]);
   const [selectedProperty, setSelectedProperty] = useState(null);
+  const searchQuery = useSelector((state) => state.search.query);
 
   // Filter States
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("All");
   const propertyTypes = ["All", "Plot", "Apartment", "Villa", "Commercial", "Office"];
 
@@ -38,7 +40,6 @@ export default function Properties() {
 
   // Clear all filters
   const clearFilters = () => {
-    setSearchQuery("");
     setSelectedType("All");
   };
 
@@ -51,18 +52,6 @@ export default function Properties() {
       {/* Header with Search */}
       <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-4">
         <h1 className="text-xl font-bold text-primary">Property Listings</h1>
-
-        {/* Search Bar */}
-        <div className="relative w-full md:w-96">
-          <FaSearch className="absolute left-3 top-3 text-gray-400 text-sm" />
-          <input
-            type="text"
-            placeholder="Search by Name or Location..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2 text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-primary outline-none transition"
-          />
-        </div>
       </div>
 
       {/* Filter Section */}

@@ -1,18 +1,25 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { FaBars, FaTimes, FaSearch } from "react-icons/fa";
-
+import { setSearchQuery } from "../features/propertySearch/searchSlice";
 const Navbar = ({ onAddProperty }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchText, setSearchText] = useState("");
+  const dispatch = useDispatch();
 
   const toggleMenu = () => setIsOpen(!isOpen);
+
+   const handleSearchChange = (e) => {
+    setSearchText(e.target.value);
+    dispatch(setSearchQuery(e.target.value)); // Update global search state
+  };
 
   return (
     <nav className="w-full fixed top-0 left-0 bg-accent border-b border-gray-300 z-50 shadow-sm">
       <div className="max-w-9xl mx-auto flex justify-between items-center px-5 md:px-10 py-3 transition-all duration-300">
         {/* Logo */}
-        <h1 className="text-2xl font-semibold text-primary tracking-tight cursor-pointer flex-shrink-0">
+        <h1 className="text-2xl font-semibold text-primary tracking-tight cursor-pointer shrink-0">
           Property<span className="text-gray-900">Dashboard</span>
         </h1>
 
@@ -23,8 +30,8 @@ const Navbar = ({ onAddProperty }) => {
             <input
               type="text"
               placeholder="Search by name or location..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchText}
+              onChange={handleSearchChange}
               className="w-full pl-10 pr-4 py-2.5 text-base border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all duration-200 placeholder-gray-500"
             />
           </div>
@@ -73,8 +80,8 @@ const Navbar = ({ onAddProperty }) => {
               type="text"
               autoFocus
               placeholder="Search..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
+              value={searchText}
+              onChange={handleSearchChange}
               className="w-full pl-10 pr-3 py-2 text-base border border-gray-300 rounded-full focus:ring-2 focus:ring-indigo-500 outline-none"
             />
           </div>
