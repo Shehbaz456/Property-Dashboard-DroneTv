@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { FaTimes, FaMapMarkerAlt, FaDollarSign, FaSearch } from "react-icons/fa";
 import { useGetPropertiesQuery } from "../store/api/propertyApiSlice";
-
-const googleMapApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+import Cards from "../components/Cards";
+import PropertyDetails from "../components/PropertyDetails";
 
 export default function Properties() {
   const { data: properties = [], isLoading, error } = useGetPropertiesQuery();
@@ -104,169 +104,19 @@ export default function Properties() {
       </p>
 
       {/* Property Cards Grid */}
-      {/* <div className="max-w-4xl mx-auto"> */}
-        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {filteredProperties.length > 0 ? (
-            filteredProperties.map((property) => (
-              <div
-                key={property._id}
-                className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition"
-              >
-                <img
-                  src={property.imageUrl}
-                  alt={property.name}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-4">
-                  <h3 className="text-0.5xl font-semibold text-gray-800">
-                    {property.name}
-                  </h3>
-                  <p className="text-0.5sm text-gray-600">{property.type}</p>
-                  <p className="text-md font-bold text-primary mt-2">
-                    ${property.price.toLocaleString()}
-                  </p>
-                  <p className="text-sm text-gray-500 mt-1 flex items-center gap-1">
-                    <FaMapMarkerAlt />
-                    {property.location}
-                  </p>
-                  <p className="text-gray-700 text-sm mt-2 leading-relaxed">
-                    {property.description.slice(0, 60)}...
-                  </p>
-
-                  <div className="mt-4 flex justify-end">
-                    <button
-                      onClick={() => setSelectedProperty(property)}
-                      className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow"
-                    >
-                      View Details
-                    </button>
-                  </div>
-                </div>
-              </div>
-            ))
-          ) : (
-            <div className="col-span-full text-center py-12">
-              <p className="text-gray-500 text-base">
-                No properties found matching your filters.
-              </p>
-              <button
-                onClick={clearFilters}
-                className="mt-4 px-4 py-2 bg-primary hover:bg-secondary text-white text-sm rounded-lg transition"
-              >
-                Clear Filters
-              </button>
-            </div>
-          )}
-        </div>
-      {/* </div> */}
+      <Cards
+        filteredProperties={filteredProperties}
+        setSelectedProperty={setSelectedProperty}
+        clearFilters={clearFilters}
+      />
 
       {/* Property Details Modal */}
-      {selectedProperty && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-2xl w-full max-w-3xl max-h-[90vh] overflow-y-auto relative">
-            {/* Close Button (Top Right) */}
-            <button
-              onClick={() => setSelectedProperty(null)}
-              className="absolute top-4 right-4 bg-gray-100 hover:bg-gray-200 p-2 rounded-full transition z-10"
-            >
-              <FaTimes size={20} className="text-gray-700" />
-            </button>
+      <PropertyDetails  
+        selectedProperty={selectedProperty}
+        setSelectedProperty={setSelectedProperty}
+      />
 
-            {/* Property Image */}
-            <div className="relative h-64 bg-gray-200">
-              <img
-                src={selectedProperty.imageUrl}
-                alt={selectedProperty.name}
-                className="w-full h-full object-cover"
-              />
-            </div>
-
-            {/* Property Details Content */}
-            <div className="p-6 space-y-4">
-              {/* Name and Type */}
-              <div>
-                <h2 className="text-xl font-bold text-gray-800 mb-1">
-                  {selectedProperty.name}
-                </h2>
-                <p className="text-sm text-gray-600 uppercase tracking-wide">
-                  {selectedProperty.type}
-                </p>
-              </div>
-
-              {/* Location */}
-              <div className="flex items-center gap-2 text-gray-700">
-                <FaMapMarkerAlt />
-                <span className="text-sm">{selectedProperty.location}</span>
-              </div>
-
-              {/* Price */}
-              <div className="flex items-center gap-2 text-primary">
-                <FaDollarSign className="text-md" />
-                <span className="text-0.5xl font-bold">
-                  ${selectedProperty.price.toLocaleString()}
-                </span>
-              </div>
-
-              {/* Description */}
-              <div>
-                <h3 className="text-md font-semibold text-gray-800 mb-2">
-                  Description:
-                </h3>
-                <p className="text-gray-700 text-sm leading-relaxed">
-                  {selectedProperty.description}
-                </p>
-              </div>
-
-              {/* Coordinates (if available) */}
-              {selectedProperty.coordinates && (
-                <div className="text-sm">
-                  <h3 className="font-semibold text-gray-800 mb-2">
-                    Location Coordinates:
-                  </h3>
-                  <p className="text-gray-600 text-xs">
-                    Latitude: {selectedProperty.coordinates.lat} | Longitude:{" "}
-                    {selectedProperty.coordinates.lng}
-                  </p>
-                </div>
-              )}
-
-              {/* Google Map Embed (if coordinates available) */}
-              {selectedProperty.coordinates &&
-                selectedProperty.coordinates.lat &&
-                selectedProperty.coordinates.lng && (
-                  <div className="mt-4">
-                    <h3 className="text-md font-semibold text-gray-800 mb-2">
-                      Map View:
-                    </h3>
-                    <div className="w-full h-64 rounded-lg overflow-hidden border border-gray-300">
-                      <iframe
-                        title="Property Location"
-                        width="100%"
-                        height="100%"
-                        frameBorder="0"
-                        style={{ border: 0 }}
-                        src={`https://www.google.com/maps/embed/v1/place?key=${googleMapApiKey}&q=${selectedProperty.coordinates.lat},${selectedProperty.coordinates.lng}&zoom=15`}
-                        allowFullScreen
-                        loading="lazy"
-                        referrerPolicy="no-referrer-when-downgrade"
-                      ></iframe>
-                    </div>
-                  </div>
-                )}
-
-              {/* Close Button at Bottom */}
-              <div className="pt-4 flex justify-center">
-                <button
-                  onClick={() => setSelectedProperty(null)}
-                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition shadow-md"
-                >
-                  Close
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+    
     </div>
   );
 }
