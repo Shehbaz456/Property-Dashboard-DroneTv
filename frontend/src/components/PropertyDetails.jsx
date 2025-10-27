@@ -1,7 +1,5 @@
-import React from 'react'
-
 import { FaTimes, FaMapMarkerAlt, FaDollarSign } from "react-icons/fa";
-const googleMapApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
+// const googleMapApiKey = import.meta.env.VITE_GOOGLE_MAPS_API_KEY;
 
 
 function PropertyDetails({ selectedProperty, setSelectedProperty }) {
@@ -84,8 +82,8 @@ function PropertyDetails({ selectedProperty, setSelectedProperty }) {
                           <h3 className="text-md font-semibold text-gray-800 mb-2">
                             Map View:
                           </h3>
-                          <div className="w-full h-64 rounded-lg overflow-hidden border border-gray-300">
-                            <iframe
+                          <div className="w-full h-28 rounded-lg overflow-hidden border border-gray-300 p-10">
+                            {/* <iframe
                               title="Property Location"
                               width="100%"
                               height="100%"
@@ -95,7 +93,8 @@ function PropertyDetails({ selectedProperty, setSelectedProperty }) {
                               allowFullScreen
                               loading="lazy"
                               referrerPolicy="no-referrer-when-downgrade"
-                            ></iframe>
+                            ></iframe> */}
+                            failed to load map
                           </div>
                         </div>
                       )}
