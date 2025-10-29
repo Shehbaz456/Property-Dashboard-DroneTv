@@ -1,4 +1,4 @@
-<img width="1897" height="908" alt="image" src="https://github.com/user-attachments/assets/791e342f-e9c3-4510-97fe-a51e4e1f2d11" />﻿# 🏡 Property Dashboard — React Developer Skill Assessment
+﻿# 🏡 Property Dashboard — React Developer Skill Assessment
 
 A full-stack property management application built with **React**, **Redux Toolkit**, **Tailwind CSS**, **Express**, **MongoDB**, and **Cloudinary**. This app allows users to browse, search, filter, and manage property listings with a modern, responsive UI.
 
@@ -256,4 +256,5 @@ This project is licensed under the **MIT License**.
 For issues or questions, please open an issue on **GitHub Issues**.
 
 ⭐ If you found this project helpful, please give it a **star!**
+
 
